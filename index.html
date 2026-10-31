@@ -29,11 +29,18 @@ a{color:inherit}
 :focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 .display{font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:.86;letter-spacing:-.005em;margin:0}
 
-/* pills */
-.pill{display:inline-block;padding:.8rem 1.4rem;border-radius:999px;background:var(--red);color:#fff;font:600 1.0625rem/1 var(--font-body);border:0;text-decoration:none;cursor:pointer;box-shadow:0 0 22px rgb(255 45 75 / .45);transition:box-shadow .2s,background .2s}
-.pill:hover{background:#ff5470;box-shadow:0 0 32px rgb(255 45 75 / .7)}
-.pill--blue{background:transparent;color:var(--blue);border:1px solid var(--blue);box-shadow:0 0 18px rgb(45 183 255 / .35)}
-.pill--blue:hover{background:rgb(45 183 255 / .15);box-shadow:0 0 28px rgb(45 183 255 / .6)}
+/* pills: red body, blue neon edge, a wave of light runs across */
+.pill{position:relative;isolation:isolate;overflow:hidden;display:inline-block;padding:.8rem 1.4rem;border-radius:999px;background:linear-gradient(100deg,#FF2D4B 0%,#FF2D4B 55%,#5a55ff 100%);color:#fff;font:600 1.0625rem/1 var(--font-body);border:1px solid var(--blue);text-decoration:none;cursor:pointer;
+  box-shadow:0 0 16px rgb(255 45 75 / .55),0 0 26px rgb(45 183 255 / .5),inset 0 0 10px rgb(45 183 255 / .45);transition:box-shadow .2s,filter .2s}
+.pill::after{content:"";position:absolute;top:-20%;bottom:-20%;left:0;width:45%;z-index:-1;pointer-events:none;
+  background:linear-gradient(100deg,transparent 0%,rgb(45 183 255 / .75) 45%,rgb(255 255 255 / .55) 55%,transparent 100%);
+  transform:translateX(-130%) skewX(-18deg);animation:wave 3.2s ease-in-out infinite}
+.pill:hover{filter:brightness(1.12);box-shadow:0 0 22px rgb(255 45 75 / .8),0 0 38px rgb(45 183 255 / .75),inset 0 0 14px rgb(45 183 255 / .6)}
+.pill:hover::after{animation-duration:1.2s}
+@keyframes wave{0%{transform:translateX(-130%) skewX(-18deg)}60%,100%{transform:translateX(330%) skewX(-18deg)}}
+.pill--blue{background:rgb(10 7 16 / .6);color:var(--blue);border-color:var(--blue);box-shadow:0 0 16px rgb(45 183 255 / .55),0 0 24px rgb(255 45 75 / .35),inset 0 0 10px rgb(45 183 255 / .3)}
+.pill--blue::after{background:linear-gradient(100deg,transparent 0%,rgb(255 45 75 / .6) 45%,rgb(255 255 255 / .35) 55%,transparent 100%);animation-delay:1.1s}
+.pill--blue:hover{filter:none;background:rgb(45 183 255 / .18)}
 
 /* hero */
 .hero{position:relative;min-height:100svh;display:grid;grid-template-rows:auto 1fr auto;padding:1.25rem var(--gutter) 2rem;overflow:hidden;isolation:isolate}
@@ -126,6 +133,7 @@ footer.site{padding:2rem var(--gutter) 3rem;display:flex;justify-content:space-b
   html{scroll-behavior:auto}
   .lit,.beacon,.logo-text,.hero h1{animation:none}
 }
+@media (prefers-reduced-motion:reduce){.pill::after{animation:none;display:none}}
 </style>
 </head>
 <body>
